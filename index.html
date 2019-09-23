@@ -1,0 +1,35 @@
+<!doctype html>
+<head>
+<title>WebView Javascript Processor</title>
+	<script type="text/javascript">
+		function doIt() {
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', 'https://flespi.io/mqtt/messages', true);
+			xhr.setRequestHeader('Content-type', 'application/json');
+			xhr.setRequestHeader('Accept', 'application/json');
+			xhr.setRequestHeader('Authorization', 'Fq7CG3j10xisThMiKMEKkERxesxSy5M2lJuPDCGtZOJGTmMtWg27LJsP2PvqI8gT');
+			xhr.onload = function() {
+				console.log(this.responseText);
+			};
+			//xhr.send('{"payload":"S3Y","topic":"esp/test"}');
+			xhr.send('{"payload":"' + getParam("msg") + '","topic":"esp/test"}');
+		}
+		function getParam(sParam) {
+			var sPageURL = window.location.search.substring(1);
+			var sURLVariables = sPageURL.split('&');
+			for (var i = 0; i < sURLVariables.length; i++) {
+				var sParameterName = sURLVariables[i].split('=');
+				if (sParameterName[0] == sParam) {
+					return sParameterName[1];
+				}
+			}
+			return 'NA';
+		}
+
+	</script>
+</head>
+<body>
+	<b>Restful Interface to MQTT-ESP Switch via Flespi</b>
+	<script>doIt()</script>
+</body>
+</html>
